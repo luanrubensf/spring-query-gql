@@ -1,4 +1,4 @@
-package com.luanrubensf.springquerygql.repositories;
+package com.luanrubensf.springquerygql.repository;
 
 import com.luanrubensf.springquerygql.core.IEntity;
 import com.luanrubensf.springquerygql.core.pagination.Page;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -26,6 +25,21 @@ public class BasicRepository {
     @Autowired
     private PathBuilderFactory pathBuilderFactory;
 
+    public <T extends  IEntity> T merge(T entity) {
+        T merged = entityManager.merge(entity);
+        entityManager.flush();
+        return merged;
+    }
+
+    public <T extends IEntity> void persist(T entity) {
+        entityManager.persist(entity);
+        entityManager.flush();
+    }
+
+    public <T extends IEntity> void remove(T entity) {
+        entityManager.remove(entity);
+    }
+
     public <T extends IEntity> T find(Class<T> clazz, Object id) {
         return entityManager.find(clazz, id);
     }
@@ -37,9 +51,12 @@ public class BasicRepository {
                 .singleResult(entityPath);
     }
 
-    public <T extends IEntity> List<T> findAll(Class<T> clazz, Predicate... where) {
+    public <T extends IEntity> List<T> findAll(Class<T> clazz, Predicate... predicates) {
         PathBuilder<T> entityPath = pathBuilderFactory.create(clazz);
-        return Collections.emptyList();
+        JPAQuery query = from(entityPath)
+                .where(applyFilters(predicates));
+
+        return query.list(entityPath);
     }
 
     public <T extends IEntity> Page<T> findAll(Class<T> clazz, Pageable pageable, Predicate... predicates) {
@@ -48,7 +65,7 @@ public class BasicRepository {
 
         PathBuilder<T> entityPath = pathBuilderFactory.create(clazz);
         JPAQuery query = from(entityPath)
-                .where(applyFilters(clazz, predicates));
+                .where(applyFilters(predicates));
 
         long total = query.count();
 
@@ -64,7 +81,7 @@ public class BasicRepository {
         return new JPAQuery(entityManager).from(entityPath);
     }
 
-    private <T> Predicate applyFilters(Class<T> clazz, Predicate... predicates) {
+    private <T> Predicate applyFilters(Predicate... predicates) {
         BooleanBuilder filter = new BooleanBuilder();
 
         if (predicates != null && predicates.length > 0) {
