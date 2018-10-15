@@ -1,5 +1,6 @@
 package com.luanrubensf.springquerygql.controller;
 
+import com.luanrubensf.springquerygql.service.ProcessoService;
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
@@ -21,12 +22,12 @@ public class GraphQLController {
 
     private final GraphQL graphQL;
 
-    public GraphQLController() {
+    public GraphQLController(ProcessoService processoService) {
         GraphQLSchema schema = new GraphQLSchemaGenerator()
                 .withResolverBuilders(
                         //Resolve by annotations
                         new AnnotatedResolverBuilder())
-                //.withOperationsFromSingleton(carService)
+                .withOperationsFromSingleton(processoService)
                 .withValueMapperFactory(new JacksonValueMapperFactory())
                 .generate();
         graphQL = GraphQL.newGraphQL(schema).build();
