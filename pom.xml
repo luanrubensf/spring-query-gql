@@ -22,10 +22,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-
         <springsecurity.version>4.1.1.RELEASE</springsecurity.version>
         <springsecurityoauth2.version>2.0.10.RELEASE</springsecurityoauth2.version>
 		<version.querydsl>3.7.4</version.querydsl>
+        <version.graphql>0.9.7</version.graphql>
+        <version.gson>2.6.2</version.gson>
 	</properties>
 
 	<dependencies>
@@ -38,7 +39,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<!--QUERY DSL -->
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
@@ -50,7 +50,17 @@
 			<artifactId>querydsl-jpa</artifactId>
 			<version>${version.querydsl}</version>
 		</dependency>
-
+		<!-- GraphQL -->
+		<dependency>
+			<groupId>io.leangen.graphql</groupId>
+			<artifactId>spqr</artifactId>
+			<version>${version.graphql}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>${version.gson}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
