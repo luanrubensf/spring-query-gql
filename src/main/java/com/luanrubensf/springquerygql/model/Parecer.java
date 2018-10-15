@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "PARECERES", schema = ApplicationConstants.SCHEMA)
@@ -25,8 +26,11 @@ public class Parecer implements IEntity<Long> {
     private Processo processo;
 
     @Column(name = "PARECER")
-    @Length(max = 1000, message = "O parecer deve ter no máximo 1000 caracteres")
-    private String parecer;
+    @Length(max = 1000, message = "O description deve ter no máximo 1000 caracteres")
+    private String description;
+
+    @Column(name = "DT_CADASTRO")
+    private LocalDate data;
 
     @Override
     public Long getId() {
@@ -45,12 +49,19 @@ public class Parecer implements IEntity<Long> {
         this.processo = processo;
     }
 
-    public String getParecer() {
-        return parecer;
+    public String getDescription() {
+        return description;
     }
 
-    public void setParecer(String parecer) {
-        this.parecer = parecer;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
 }
