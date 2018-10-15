@@ -77,7 +77,7 @@ public class BasicRepository {
         return Page.of(limit, offset, total, content);
     }
 
-    private JPAQuery from(EntityPath... entityPath) {
+    public JPAQuery from(EntityPath... entityPath) {
         return new JPAQuery(entityManager).from(entityPath);
     }
 

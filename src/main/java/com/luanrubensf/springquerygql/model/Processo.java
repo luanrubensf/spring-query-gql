@@ -1,5 +1,6 @@
 package com.luanrubensf.springquerygql.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.luanrubensf.springquerygql.core.ApplicationConstants;
 import com.luanrubensf.springquerygql.core.IEntity;
 import org.hibernate.annotations.GenericGenerator;
@@ -33,7 +34,7 @@ public class Processo implements IEntity<Long> {
     @Length(max = 1000, message = "A descricao deve ter no máximo 1000 caracteres")
     private String description;
 
-    @OneToMany(mappedBy = "processo")
+    @OneToMany(mappedBy = "processo", fetch = FetchType.LAZY)
     private List<Parecer> pareceres;
 
     @Override
@@ -61,6 +62,7 @@ public class Processo implements IEntity<Long> {
         this.description = description;
     }
 
+    @JsonIgnore //to avoid recursive calls
     public List<Parecer> getPareceres() {
         return pareceres;
     }
