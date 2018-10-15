@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>spring-query-gql</name>
-	<description></description>
+	<description>Example application using Spring, QueryDSL and GraphQL</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -39,6 +39,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
 		<!--QUERY DSL -->
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
@@ -50,17 +51,20 @@
 			<artifactId>querydsl-jpa</artifactId>
 			<version>${version.querydsl}</version>
 		</dependency>
+
 		<!-- GraphQL -->
 		<dependency>
 			<groupId>io.leangen.graphql</groupId>
 			<artifactId>spqr</artifactId>
 			<version>${version.graphql}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>${version.gson}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
