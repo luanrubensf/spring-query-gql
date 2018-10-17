@@ -1,6 +1,8 @@
 package com.luanrubensf.springquerygql.controller;
 
 import com.luanrubensf.springquerygql.model.Processo;
+import com.luanrubensf.springquerygql.model.QParecer;
+import com.luanrubensf.springquerygql.model.QProcesso;
 import com.luanrubensf.springquerygql.repository.BasicRepository;
 import com.luanrubensf.springquerygql.service.ProcessoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +30,21 @@ public class ProcessoController {
     @GetMapping("list")
     public List<Processo> list() {
         return repository.findAll(Processo.class);
+    }
+
+    @GetMapping("join")
+    public List<Processo> join(@RequestParam("parecer") String parecer) {
+        return repository.from(QProcesso.processo)
+                .leftJoin(QProcesso.processo.pareceres, QParecer.parecer)
+                .where(QParecer.parecer.description.like(parecer))
+                .distinct()
+                .list(QProcesso.processo);
+    }
+
+    @GetMapping("auto-query")
+    public List<Processo> autoJoin(@RequestParam("parecer") String parecer) {
+        return repository.from(QProcesso.processo)
+                .where(QProcesso.processo.pareceres.any().description.like(parecer))
+                .list(QProcesso.processo);
     }
 }
