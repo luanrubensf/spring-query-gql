@@ -1,2 +1,2 @@
 # spring-query-gql
-Example application using Spring, QueryDSL and GraphQL
+Example application using Spring, QueryDSL and GraphQL.
