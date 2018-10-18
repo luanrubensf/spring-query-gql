@@ -42,7 +42,7 @@ public class ProcessoController {
     }
 
     @GetMapping("auto-query")
-    public List<Processo> autoJoin(@RequestParam("parecer") String parecer) {
+    public List<Processo> autoQuery(@RequestParam("parecer") String parecer) {
         return repository.from(QProcesso.processo)
                 .where(QProcesso.processo.pareceres.any().description.like(parecer))
                 .list(QProcesso.processo);
