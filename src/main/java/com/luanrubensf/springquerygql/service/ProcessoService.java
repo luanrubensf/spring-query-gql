@@ -16,7 +16,5 @@ public class ProcessoService {
         return repository.merge(entity);
     }
 
-    private void validate() {
-
-    }
+    private void validate() { }
 }
