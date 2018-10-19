@@ -5,11 +5,13 @@ import com.luanrubensf.springquerygql.model.QParecer;
 import com.luanrubensf.springquerygql.model.QProcesso;
 import com.luanrubensf.springquerygql.repository.BasicRepository;
 import com.luanrubensf.springquerygql.service.ProcessoService;
+import com.mysema.query.group.GroupBy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("processos")
@@ -46,5 +48,12 @@ public class ProcessoController {
         return repository.from(QProcesso.processo)
                 .where(QProcesso.processo.pareceres.any().description.like(parecer))
                 .list(QProcesso.processo);
+    }
+
+    @GetMapping("group-by")
+    public Map<String, Long> groupBy() {
+         return repository.from(QProcesso.processo)
+                 .groupBy(QProcesso.processo.name)
+                 .transform(GroupBy.groupBy(QProcesso.processo.name).as(QProcesso.processo.id.count()));
     }
 }
