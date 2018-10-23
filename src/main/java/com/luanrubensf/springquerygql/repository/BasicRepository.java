@@ -54,7 +54,11 @@ public class BasicRepository {
     public <T extends IEntity> List<T> findAll(Class<T> clazz, Predicate... predicates) {
         PathBuilder<T> entityPath = pathBuilderFactory.create(clazz);
         JPAQuery query = from(entityPath)
+<<<<<<< HEAD
                 .where(applyFilters(predicates));
+=======
+                .where(predicates);
+>>>>>>> refs/remotes/origin/master
 
         return query.list(entityPath);
     }
@@ -65,7 +69,11 @@ public class BasicRepository {
 
         PathBuilder<T> entityPath = pathBuilderFactory.create(clazz);
         JPAQuery query = from(entityPath)
+<<<<<<< HEAD
                 .where(applyFilters(predicates));
+=======
+                .where(predicates);
+>>>>>>> refs/remotes/origin/master
 
         long total = query.count();
 
@@ -80,6 +88,7 @@ public class BasicRepository {
     public JPAQuery from(EntityPath... entityPath) {
         return new JPAQuery(entityManager).from(entityPath);
     }
+<<<<<<< HEAD
 
     private <T> Predicate applyFilters(Predicate... predicates) {
         BooleanBuilder filter = new BooleanBuilder();
@@ -90,4 +99,6 @@ public class BasicRepository {
 
         return filter;
     }
+=======
+>>>>>>> refs/remotes/origin/master
 }
