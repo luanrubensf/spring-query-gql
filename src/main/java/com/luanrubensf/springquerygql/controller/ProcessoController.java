@@ -1,10 +1,7 @@
 package com.luanrubensf.springquerygql.controller;
 
-<<<<<<< HEAD
-=======
 import com.luanrubensf.springquerygql.core.pagination.Page;
 import com.luanrubensf.springquerygql.core.pagination.Pageable;
->>>>>>> refs/remotes/origin/master
 import com.luanrubensf.springquerygql.model.Processo;
 import com.luanrubensf.springquerygql.model.QParecer;
 import com.luanrubensf.springquerygql.model.QProcesso;
@@ -39,8 +36,6 @@ public class ProcessoController {
         return repository.findAll(Processo.class);
     }
 
-<<<<<<< HEAD
-=======
     @GetMapping("page")
     public Page<Processo> page(@RequestParam(value = "limit", required = false) Integer limit,
                                @RequestParam(value = "offset", required = false) Long offset) {
@@ -48,7 +43,6 @@ public class ProcessoController {
         return repository.findAll(Processo.class, pageable);
     }
 
->>>>>>> refs/remotes/origin/master
     @GetMapping("join")
     public List<Processo> join(@RequestParam("parecer") String parecer) {
         return repository.from(QProcesso.processo)
