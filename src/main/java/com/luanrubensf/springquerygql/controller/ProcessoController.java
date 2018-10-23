@@ -1,5 +1,7 @@
 package com.luanrubensf.springquerygql.controller;
 
+import com.luanrubensf.springquerygql.core.pagination.Page;
+import com.luanrubensf.springquerygql.core.pagination.Pageable;
 import com.luanrubensf.springquerygql.model.Processo;
 import com.luanrubensf.springquerygql.model.QParecer;
 import com.luanrubensf.springquerygql.model.QProcesso;
@@ -32,6 +34,13 @@ public class ProcessoController {
     @GetMapping("list")
     public List<Processo> list() {
         return repository.findAll(Processo.class);
+    }
+
+    @GetMapping("page")
+    public Page<Processo> page(@RequestParam(value = "limit", required = false) Integer limit,
+                               @RequestParam(value = "offset", required = false) Long offset) {
+        Pageable pageable = Pageable.of(limit, offset);
+        return repository.findAll(Processo.class, pageable);
     }
 
     @GetMapping("join")
