@@ -3,6 +3,7 @@ package com.luanrubensf.springquerygql.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.luanrubensf.springquerygql.core.ApplicationConstants;
 import com.luanrubensf.springquerygql.core.IEntity;
+import io.leangen.graphql.annotations.GraphQLQuery;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
@@ -22,16 +23,19 @@ public class Processo implements IEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PROCESSOS")
+    @GraphQLQuery(name = "id", description = "Processo id")
     private Long id;
 
     @NotNull(message = "O nome do processo não pode ser nulo")
     @Column(name = "NAME")
     @Length(max = 100, message = "O nome deve ter no máximo 100 caracteres")
+    @GraphQLQuery(name = "name", description = "Nome do processo")
     private String name;
 
     @NotNull(message = "A descrição do processo não pode ser nulo")
     @Column(name = "DESCRIPTION")
     @Length(max = 1000, message = "A descricao deve ter no máximo 1000 caracteres")
+    @GraphQLQuery(name = "description", description = "Descrição do processo")
     private String description;
 
     @OneToMany(mappedBy = "processo", fetch = FetchType.LAZY)

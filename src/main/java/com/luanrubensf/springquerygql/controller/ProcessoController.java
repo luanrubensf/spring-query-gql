@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("processos")
+@RequestMapping("api/processos")
 public class ProcessoController {
 
     @Autowired

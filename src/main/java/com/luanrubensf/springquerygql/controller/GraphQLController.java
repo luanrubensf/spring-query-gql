@@ -1,5 +1,6 @@
 package com.luanrubensf.springquerygql.controller;
 
+import com.luanrubensf.springquerygql.service.ParecerService;
 import com.luanrubensf.springquerygql.service.ProcessoService;
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
@@ -8,26 +9,27 @@ import graphql.schema.GraphQLSchema;
 import io.leangen.graphql.GraphQLSchemaGenerator;
 import io.leangen.graphql.metadata.strategy.query.AnnotatedResolverBuilder;
 import io.leangen.graphql.metadata.strategy.value.jackson.JacksonValueMapperFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
+@Transactional
 public class GraphQLController {
 
     private final GraphQL graphQL;
 
-    public GraphQLController(ProcessoService processoService) {
+    public GraphQLController(ProcessoService processoService, ParecerService parecerService) {
         GraphQLSchema schema = new GraphQLSchemaGenerator()
                 .withResolverBuilders(
                         //Resolve by annotations
                         new AnnotatedResolverBuilder())
                 .withOperationsFromSingleton(processoService)
+                .withOperationsFromSingleton(parecerService)
                 .withValueMapperFactory(new JacksonValueMapperFactory())
                 .generate();
         graphQL = GraphQL.newGraphQL(schema).build();
